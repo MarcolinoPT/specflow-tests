@@ -11,8 +11,12 @@
     [Binding]
     public class GetUserFeatureSteps
     {
-        UsersController usersController;
-        IHttpActionResult response;
+        private readonly ScenarioContext context;
+
+        public GetUserFeatureSteps(ScenarioContext context)
+        {
+            this.context = context ?? throw new System.ArgumentNullException(nameof(context));
+        }
 
         [Given(@"that a user exists in the system")]
         public void GivenThatAUserExistsInTheSystem()
@@ -27,18 +31,20 @@
             };
             repository.Add(user);
             var controller = new UsersController(repository);
-            usersController = controller;
+            this.context.Set(controller);
         }
 
         [When(@"I request to get the user by Id")]
         public void WhenIRequestToGetTheUserById()
         {
-            response = this.usersController.GetUser(1);
+            var usersController = this.context.Get<UsersController>();
+            this.context.Set(usersController.GetUser(1));
         }
 
         [Then(@"the user should be returned in the response")]
         public void ThenTheUserShouldBeReturnedInTheResponse()
         {
+            var response = this.context.Get<IHttpActionResult>();
             var user = response as OkNegotiatedContentResult<User>;
             Assert.Equal(expected: 1, actual: user.Content.Id);
         }
@@ -46,14 +52,21 @@
         [Then(@"the response status code is '(.*)'")]
         public void ThenTheResponseStatusCodeIs(string p0)
         {
+            var response = this.context.Get<IHttpActionResult>();
             if (p0.Equals("200 OK"))
             {
                 var resp = response as OkNegotiatedContentResult<User>;
-                Assert.NotNull(resp);
+                var resp2 = response as OkResult;
+                Assert.False(resp is null && resp2 is null);
             }
             else if (p0.Equals("404 Not Found"))
             {
                 var resp = response as NotFoundResult;
+                Assert.NotNull(resp);
+            }
+            else if (p0.Equals("400 Bad Request"))
+            {
+                var resp = response as BadRequestResult;
                 Assert.NotNull(resp);
             }
         }
@@ -63,12 +76,13 @@
         {
             var repository = new InMemoryUsersRepository();
             var controller = new UsersController(repository);
-            usersController = controller;
+            this.context.Set(controller);
         }
 
         [Then(@"no user should be returned in the response")]
         public void ThenNoUserShouldBeReturnedInTheResponse()
         {
+            var response = this.context.Get<IHttpActionResult>();
             var resp = response as NotFoundResult;
             Assert.NotNull(resp);
         }
