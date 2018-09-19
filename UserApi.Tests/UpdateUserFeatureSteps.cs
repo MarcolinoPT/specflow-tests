@@ -7,7 +7,7 @@
     using TechTalk.SpecFlow.Assist;
     using Xunit;
 
-    [Binding]
+    [Binding, Scope(Feature = "UpdateUserFeature")]
     class UpdateUserFeatureSteps
     {
         private readonly ScenarioContext context;

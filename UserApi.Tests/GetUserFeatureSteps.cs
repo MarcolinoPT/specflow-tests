@@ -18,6 +18,18 @@
             this.context = context ?? throw new System.ArgumentNullException(nameof(context));
         }
 
+        [BeforeScenario, Scope(Scenario = "Get user by Id")]
+        public static void TestHook()
+        {
+
+        }
+
+        [AfterScenario, Scope(Scenario = "Get user by Id")]
+        public static void TestHook2()
+        {
+
+        }
+
         [Given(@"that a user exists in the system")]
         public void GivenThatAUserExistsInTheSystem()
         {
@@ -34,8 +46,8 @@
             this.context.Set(controller);
         }
 
-        [When(@"I request to get the user by Id")]
-        public void WhenIRequestToGetTheUserById()
+        [When(@"I request to get the user by Id"), Scope(Tag = "tag1", Scenario = "Get user by Id")]
+        public void WhenIRequestToGetTheUserById2()
         {
             var usersController = this.context.Get<UsersController>();
             this.context.Set(usersController.GetUser(1));

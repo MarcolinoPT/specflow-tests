@@ -36,8 +36,8 @@ namespace UserApi.Tests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GetUserFeature", "\tIn order to get user information from the API\r\n\tAs an API consumer\r\n\tI want to g" +
-                    "et users by ID", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "GetUserFeature", "    In order to get user information from the API\r\n    As an API consumer\r\n    I " +
+                    "want to get users by ID", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,19 +80,21 @@ namespace UserApi.Tests
         [Xunit.FactAttribute(DisplayName="Get user by Id")]
         [Xunit.TraitAttribute("FeatureTitle", "GetUserFeature")]
         [Xunit.TraitAttribute("Description", "Get user by Id")]
+        [Xunit.TraitAttribute("Category", "tag1")]
         public virtual void GetUserById()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get user by Id", null, ((string[])(null)));
-#line 6
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get user by Id", null, new string[] {
+                        "tag1"});
+#line 7
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 7
- testRunner.Given("that a user exists in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
- testRunner.When("I request to get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.Given("that a user exists in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
- testRunner.Then("the user should be returned in the response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.When("I request to get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 10
+    testRunner.Then("the user should be returned in the response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 11
     testRunner.And("the response status code is \'200 OK\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -101,19 +103,21 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.FactAttribute(DisplayName="Get non-existing user by Id")]
         [Xunit.TraitAttribute("FeatureTitle", "GetUserFeature")]
         [Xunit.TraitAttribute("Description", "Get non-existing user by Id")]
+        [Xunit.TraitAttribute("Category", "tag1")]
         public virtual void GetNon_ExistingUserById()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get non-existing user by Id", null, ((string[])(null)));
-#line 12
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get non-existing user by Id", null, new string[] {
+                        "tag1"});
+#line 14
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
-#line 13
-    testRunner.Given("that a user does not exist in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 14
-    testRunner.When("I request to get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
-    testRunner.Then("no user should be returned in the response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Given("that a user does not exist in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 16
+    testRunner.When("I request to get the user by Id", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
+    testRunner.Then("no user should be returned in the response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 18
     testRunner.And("the response status code is \'404 Not Found\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
